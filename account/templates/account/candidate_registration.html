@@ -1,0 +1,109 @@
+{% extends "base.html" %} {% block title %}Register Candidate{% endblock %}
+
+{% block script %}
+<script>
+  const stateNames = document.getElementById('cand-state');
+  //stateconst-json
+  $.ajax({
+    type: 'GET',
+    url: '/stateconst-json/',
+    success: function (response) {
+      const stateData = response.data
+      // Appending states into select field
+      stateData.map(item => {
+        $('#cand-state').append($('<option>').val(item.state).text(item.state));
+      })
+
+      stateNames.addEventListener('change', e => {
+        //console.log(e.target.value)
+        var selectedState = e.target.value
+
+        $('#cand-const').children().remove();
+        $('#cand-const').append($('<option>').text("--- Select ---"));
+
+        stateData.map(items => {
+          if (items.state == selectedState) {
+            items.constituency.map(consty => {
+              // Appending selected state constituencies
+              $('#cand-const').append($('<option>').val(consty).text(consty));
+            })
+          }
+        })
+
+      })
+    },
+    error: function (error) {
+      console.error(error);
+    }
+  })
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- LOGIN FORM -->
+<section>
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                    <p class="text-center h2 fw-bold mb-4 mx-1 mx-md-4 mt-5">Register Candidate</p>
+
+                    <form method="POST" class="row g-3 mx-1 mx-md-4 mb-4 forms">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            <label for="candidate-state">Election</label>
+                            <select name="cand_election" class="form-select slt">
+                                <option value="" selected>--- Select ---</option>
+                                {% for election in elections %}
+                                <option value="{{ election.id }}">{{ election }}</option>
+                                {% endfor %}
+                              </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="candidate-name">Candidate Name</label>
+                            <input type="text" class="form-control" name="cand-name">
+                        </div>
+                        <div class="col-12">
+                            <label for="candidate-email">Candidate E-mail</label>
+                            <input type="email" class="form-control" name="cand-email">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="candidate-state">Candidate State</label>
+                            <select name="cand-state" class="form-select slt" id="cand-state">
+                                <option value="">--- Select ---</option>
+                              </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="candidate-const">Candidate Constituency</label>
+                            <select name="cand-const" class="form-select slt" id="cand-const">
+                                <option value="">--- Select ---</option>
+                              </select>
+                        </div>
+                        <div class="col-12">
+                            <label for="candidate-party">Candidate Party</label>
+                            <input type="text" class="form-control" name="cand-party">
+                        </div>
+                        <div class="col-12">
+                            <label for="candidate-about">Candidate About</label>
+                            <textarea class="form-control" name="cand-about"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-center mx-4">
+                            <button type="submit" class="btn btn-primary btn-md px-5">Register</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-10 col-lg-6 col-xl-7 d-flex order-1 order-lg-2">
+
+                    {% load static %}
+                    <img src="{% static 'img/login.webp' %}" class="img-fluid" alt="Sample image">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- END LOGIN FORM -->
+
+{% endblock %}

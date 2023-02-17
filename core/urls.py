@@ -8,4 +8,5 @@ urlpatterns = [
     path('candidate/<str:candidate_idd>/', views.candidate, name='candidate'),
     path('voting/<str:election_idd>/', views.voting_process, name='voting'),
     path('election-result/<str:election_idd>/', views.election_result, name='election-result'),
+    path('result/', views.result, name='result'),
 ]

@@ -110,3 +110,8 @@ def election_result(request, election_idd):
 
     return render(request, "core/election_result.html", context=context)
 
+#Result View
+def result(request):
+    elect_data = Election.objects.filter(is_active=True)
+    return render(request, "core/result.html", {"elect_data":elect_data})
+

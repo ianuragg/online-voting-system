@@ -48,7 +48,9 @@ def register_user(request):
             messages.error(request, "Voter must be 18 years old.")
         else:
             #User Registration
-            new_user = User.objects.create_user(password=password1,email=email,fname=fname,lname=lname,dob=dob,gender=gender,state=state,constituency=constituency,contact=contact)
+            new_user = User.objects.create_user(password=password1,email=email,fname=fname,
+                                                lname=lname,dob=dob,gender=gender,state=state,
+                                                constituency=constituency,contact=contact, is_voter=True)
             new_user.save()
 
             #Authenticating User
@@ -85,7 +87,7 @@ def logout_user(request):
     #Sign out user
     logout(request)
     messages.error(request, "You have successfully logged out!")
-    return redirect("login-user")
+    return redirect("login")
 
 #Get state and constituency data
 def get_state_const_data(request):
@@ -127,25 +129,29 @@ def election_register(request):
 @login_required(login_url='login')
 def candidate_register(request):
     # Check if admin
-    if request.user.is_admin:
-        if request.method == 'POST':
-            #Getting form fields
-            election_state = request.POST['state']
-            election_name = request.POST['election-name']
-            start_date = request.POST['start-date']
-            end_date = request.POST['end-date']
+    check_admin = get_object_or_404(User, id=request.user.id, is_admin=True)
+    if request.method == 'POST':
+        #Getting form fields
+        cand_election = request.POST['cand_election']
+        cand_name = request.POST['cand-name']
+        cand_email = request.POST['cand-email']
+        cand_state = request.POST['cand-state']
+        cand_const = request.POST['cand-const']
+        cand_party = request.POST['cand-party']
+        cand_about = request.POST['cand-about']
 
-            #Check if election exist
-            election = Election.objects.filter(election_state=election_state, start_date=start_date, end_date=end_date).exists()
+        #Check if candidate exist
+        candidate = Candidate.objects.filter(cand_email=cand_email).exists()
 
-            if election:
-                messages.error(request, "Election already exists.")
-            else:
-                #Election Registration
-                new_election = Election(election_state=election_state,election_name=election_name, start_date=start_date, end_date=end_date)
-                new_election.save()
-                messages.success(request, "Election Created.")
-    else:
-        raise Http404
+        if candidate:
+            messages.error(request, "Candidate already exists.")
+        else:
+            #Election Registration
+            new_candidate = Candidate(cand_election_id=cand_election, cand_name=cand_name, cand_email=cand_email, 
+                                    cand_state=cand_state, cand_const=cand_const, cand_party=cand_party,cand_about=cand_about)
+            new_candidate.save()
+            messages.success(request, "Candidate Registered.")
+    
+    elections = Election.objects.filter(is_active=True)
 
-    return render(request, "account/candidate_registration.html")
+    return render(request, "account/candidate_registration.html", {"elections":elections})

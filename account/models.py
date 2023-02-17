@@ -53,6 +53,7 @@ class User(AbstractBaseUser):
     contact = models.IntegerField(unique=True, verbose_name="Contact")
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
+    is_voter = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

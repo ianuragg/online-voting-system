@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% block title %}Current Elections{% endblock %}
+
+{% block content %}
+
+<!-- ELECTION DETAIL SECTION -->
+<section>
+    <div class="section-header">
+        Elections in Your State
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for elect_info in elect_data %}
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card shadow election-card">
+                <div class="card-body">
+                    <div class="text-center pb-4">
+                        <h4 class="elect-title">{{ elect_info.election_name }}</h4>
+                    </div>
+                    <div class="pb-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="fw-bold">State:</span>
+                            <span>{{ elect_info.election_state }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="fw-bold">Start Date:</span>
+                            <span>{{ elect_info.start_date }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="fw-bold">End Date:</span>
+                            <span>{{ elect_info.end_date }}</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        {% if elect_info.is_active == True %}
+                        <a href="{% url 'election' election_idd=elect_info.election_uid %}"><button type="button"
+                                class="btn btn-sm btn-primary">More</button></a>
+                        {% else %}
+                        <a href="/"><button type="button" class="btn btn-outline-dark btn-sm">Election Over</button></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<!-- END ELECTION DETAIL SECTION -->
+{% endblock %}

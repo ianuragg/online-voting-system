@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block title %}Login{% endblock %}
+
+{% block content %}
+<!-- LOGIN FORM -->
+<section>
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                    <p class="text-center h2 fw-bold mb-4 mx-1 mx-md-4 mt-5">Login</p>
+
+                    <form method="POST" class="row g-3 mx-1 mx-md-4 mb-4 forms">
+                        {% csrf_token %}
+                        <div class="form-floating col-12">
+                            <input type="text" class="form-control float-form" name="email"
+                                placeholder="Email Address">
+                            <label for="email">Email Addresss</label>
+                        </div>
+                        <div class="form-floating col-12">
+                            <input type="password" class="form-control float-form" name="password" placeholder="Password">
+                            <label for="password">Password</label>
+                        </div>
+
+                        <p class="small mb-3 pb-lg-2 mx-2"><a class="fw-bold" href="/change-password">Change
+                                password?</a></p>
+
+                        <div class="d-flex justify-content-center mx-4">
+                            <button type="submit" class="btn btn-primary btn-md px-5">Login</button>
+                        </div>
+                    </form>
+                    <div>
+                        <p class="mx-1 mx-md-4 mb-3">Don't have an account? <a href="{% url 'register' %}" class="fw-bold">Sign Up</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-10 col-lg-6 col-xl-7 d-flex order-1 order-lg-2">
+
+                    {% load static %}
+                    <img src="{% static 'img/login.webp' %}" class="img-fluid" alt="Sample image">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- END LOGIN FORM -->
+
+{% endblock %}

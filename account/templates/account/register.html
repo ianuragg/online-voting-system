@@ -1,0 +1,125 @@
+{% extends "base.html" %} {% block title %}Sign Up{% endblock %}
+
+{% block script %}
+<script>
+  const stateNames = document.getElementById('states-in');
+  //stateconst-json
+  $.ajax({
+    type: 'GET',
+    url: '/stateconst-json/',
+    success: function (response) {
+      const stateData = response.data
+      // Appending states into select field
+      stateData.map(item => {
+        $('#states-in').append($('<option>').val(item.state).text(item.state));
+      })
+
+      stateNames.addEventListener('change', e => {
+        //console.log(e.target.value)
+        var selectedState = e.target.value
+
+        $('#states-const').children().remove();
+        $('#states-const').append($('<option>').text("--- Select ---"));
+
+        stateData.map(items => {
+          if (items.state == selectedState) {
+            items.constituency.map(consty => {
+              // Appending selected state constituencies
+              $('#states-const').append($('<option>').val(consty).text(consty));
+            })
+          }
+        })
+
+      })
+    },
+    error: function (error) {
+      console.error(error);
+    }
+  })
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- REGISTRATION FORM -->
+<section>
+  <div class="card shadow">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+          <p class="text-center h2 fw-bold mb-4 mx-1 mx-md-4 mt-3">Register</p>
+
+          <form method="POST" class="row g-3 mx-1 mx-md-4 mb-3 forms">
+            {% csrf_token %}
+            <div class="col-md-6">
+              <label for="firstname" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="fname" name="fname" minlength="3" required>
+            </div>
+            <div class="col-md-6">
+              <label for="lastname" class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="lname" name="lname" minlength="3" required>
+            </div>
+            <div class="col-12">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" name="email" required>
+            </div>
+            <div class="col-md-6">
+              <label for="password1" class="form-label">Password</label>
+              <input type="password" class="form-control" name="password1" minlength="8" required>
+            </div>
+            <div class="col-md-6">
+              <label for="password2" class="form-label">Password(Confirm)</label>
+              <input type="password" class="form-control" name="password2" minlength="8" required>
+            </div>
+            <div class="col-12">
+              <label for="dob" class="form-label">D.O.B</label>
+              <input type="date" class="form-control" name="dob" required>
+            </div>
+            <div class="col-md-6">
+              <label for="contact" class="form-label">Contact</label>
+              <input type="text" class="form-control" name="contact" minlength="10" maxlength="10" required>
+            </div>
+            <div class="col-md-6">
+              <label for="gender" class="form-label">Gender</label>
+              <select name="gender" class="form-select slt">
+                <option selected>--- Select ---</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Others</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="state" class="form-label">State</label>
+              <select name="state" class="form-select slt" id="states-in">
+                <option value="">--- Select ---</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="constituency" class="form-label">Constituency</label>
+              <select name="constituency" class="form-select slt" id="states-const">
+                <option value="">--- Select ---</option>
+              </select>
+            </div>
+            <div class="col-12 pt-2 text-center">
+              <button type="submit" class="btn btn-primary btn-md px-5">Register</button>
+            </div>
+          </form>
+          <div>
+            <p class="mx-1 mx-md-4 mb-3">Already have an account? <a href="{% url 'login' %}"
+                class="fw-bold">Login</a>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-10 col-lg-6 col-xl-7 d-flex order-1 order-lg-2">
+
+          {% load static %}
+          <img src="{% static 'img/reg.webp' %}" class="img-fluid" alt="Sample image">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- END REGISTRATION FORM -->
+
+{% endblock %}

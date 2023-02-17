@@ -1,0 +1,99 @@
+{% extends "base.html" %} {% block title %}Election Result{% endblock %}
+
+{% block content %}
+
+<!-- RESULT PAGE -->
+<section>
+    <div class="section-header">
+        {{ election }} Leaderboard
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card election-card shadow">
+                <div class="card-body">
+                    <div class="text-center pb-4">
+                        <h4 class="elect-title">Election Details</h4>
+                    </div>
+                    <div class="pb-4">
+                        <div class="d-flex justify-content-between mb-4">
+                            <span><b>Election Name</b></span>
+                            <span><b>{{ election.election_name }}</b></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span><b>State</b></span>
+                            <span><b>{{ election.election_state }}</b></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span><b>Start Date</b></span>
+                            <span><b>{{ election.start_date }}</b></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span><b>End Date</b></span>
+                            <span><b>{{ election.end_date }}</b></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span><b>Election Period</b></span>
+                            <span><b>{{ election_days_left }} Days Left</b></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span><b>No. of Candidates</b></span>
+                            <span><b>{{ candidates|length }}</b></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span><b>Total Votes</b></span>
+                            <span><b>{{ total_votes }}</b></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            {% if election.is_active == True %}
+                            <span><b>Leading Candidate</b></span>
+                            <span class="cand-rslt"><b>{{ winnerCand }}</b></span>
+                            {% else %}
+                            <span><b>Winner</b></span>
+                            <span class="cand-rslt"><b>{{ winnerCand }}</b></span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-8 col-md-6 mb-4">
+            <div class="card election-card shadow">
+                <div class="card-body">
+                    <div class="text-center pb-4">
+                        <h4 class="elect-title">{{ elect_info.election_name }}</h4>
+                    </div>
+                    <div class="pb-4">
+                        <table class="table table-borderless align-middle">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Candidate</th>
+                                    <th scope="col">Constituency</th>
+                                    <th scope="col">Votes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cand_info in candidates %}
+                                <tr>
+                                    <td class="cand-rslt"><a target="_blank" href="{% url 'candidate' candidate_idd=cand_info.candidate_uid %}">{{cand_info.cand_name }}</a></td>
+                                    <td>{{ cand_info.cand_const }}</td>
+                                    <td>{{ cand_info.total_votes }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td><b>Total Votes</b></td>
+                                    <td></td>
+                                    <td><b>{{ total_votes }}</b></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END RESULT PAGE -->
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %} {% block title %}Voting Process{% endblock %}
+
+{% block content %}
+<!-- VOTING PROCESS SECTION -->
+<section>
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                    {% if not candidates %}
+                    <div class="d-flex justify-content-center align-items-center mt-5">
+                        <p>No candidate registered.</p>
+                    </div>
+                    {% else %}
+                    <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-5">
+                        VOTE
+                    </p>
+                    {% if is_voted %}
+                    <div class="d-flex justify-content-center align-items-center">
+                        <p>You have already voted. <a href="{% url 'election-result' election_idd=election.election_uid %}">Click here</a> to see leaderboard.</p>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        {% load static %}
+                        <img src="{% static 'img/vote_confirm.png' %}" class="img-fluid" alt="Sample image">
+                    </div>
+                    {% else %}
+                    <form method="POST" class="row g-3 mx-1 mx-md-4 mb-4 log-in">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between mb-3">
+                            <span><b>Candidate</b></span>
+                            <span><b>Party</b></span>
+                        </div>
+                        {% for cand_info in candidates %}
+                        <div class="d-flex justify-content-between">
+                            <span>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="cand-id"
+                                        value="{{ cand_info.candidate_uid }}" id="flexRadioDefault1" required>
+                                    <label class="form-check-label" for="flexRadioDefault1"
+                                        style="text-transform: capitalize;">
+                                        {{ cand_info.cand_name }}
+                                    </label>
+                                </div>
+                            </span>
+                            <span>
+                                {{ cand_info.cand_party }}
+                            </span>
+                        </div>
+                        {% endfor %}
+                        <!-- Button trigger modal -->
+                        <div class="d-flex justify-content-center mx-4">
+                            <button type="button" class="btn btn-md btn-primary px-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Vote</button>
+                        </div>
+  
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirm Your Vote</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </form>
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <div class="col-md-10 col-lg-6 col-xl-7 d-flex order-1 order-lg-2">
+                    {% load static %}
+                    <img src="{% static 'img/voting_day.webp' %}" class="img-fluid" alt="Sample image">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ENDVOTING PROCESS SECTION -->
+
+{% endblock %}

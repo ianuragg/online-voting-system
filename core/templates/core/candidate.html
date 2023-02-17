@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block title %}Candidate{% endblock %}
+
+{% block content %}
+
+<!-- CANDIDATE PAGE -->
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col-xl-2 col-md-6 mb-4">
+        <div class="card shadow">
+            <img class="rounded img-fluid" src="{{ candidate.cand_img.url }}" style="width: 100%;">
+        </div>
+    </div>
+
+    <div class="col-xl-10 col-md-6 mb-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <p class="card-text">
+                <p style="text-transform: capitalize;">Name: {{ candidate.cand_name }}</p>
+                <p>Email: {{ candidate.cand_email }}</p>
+                <p>Party: {{ candidate.cand_party }}</p>
+                <p>Constituency: {{ candidate.cand_const }}</p>
+                <p>Description: {{ candidate.cand_about }}</p>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END CANDIDATE PAGE -->
+{% endblock %}

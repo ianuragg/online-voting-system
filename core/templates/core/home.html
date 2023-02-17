@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- Introduction Section -->
+<section>
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                    <div class="mx-1 mt-5">
+                        <p class="ovs-title">Online Voting System</p>
+                        <h2 class="big-heading">The New Way To Choose Your Leader!</h2>
+                        <a href="{% if user.is_authenticated %}{% url 'elections' %}{% else %}{% url 'login' %}{% endif %}"><button type="button"
+                                class="btn btn-primary btn-lg getstart-button">Get Started</button></a>
+                    </div>
+                </div>
+                <div class="col-md-10 col-lg-6 col-xl-7 d-flex order-1 order-lg-2">
+                    {% load static %}
+                    <img src="{% static 'img/home.webp' %}" class="img-fluid" alt="Sample image" width="650" height="500">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

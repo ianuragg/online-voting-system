@@ -1,0 +1,95 @@
+{% extends "base.html" %} {% block title %}Election Details{% endblock %}
+
+{% block content %}
+
+<section>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <!-- ELECTION DETAIL -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="text-center pb-4">
+                        <h4 class="elect-title">Election Details</h4>
+                    </div>
+                    <div class="pb-4">
+                        <div class="d-flex justify-content-between mb-4">
+                            <span><b>Election Name</b></span>
+                            <span><b>{{ election.election_name }}</b></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span><b>State</b></span>
+                            <span><b>{{ election.election_state }}</b></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span><b>Start Date</b></span>
+                            <span><b>{{ election.start_date }}</b></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span><b>End Date</b></span>
+                            <span><b>{{ election.end_date }}</b></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span><b>Election Period</b></span>
+                            <span><b>{{ election_days_left }} Days Left</b></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span><b>No. of Candidates</b></span>
+                            <span><b>{{ candidates|length }}</b></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span>
+                                <b>Caste Vote</b>
+                            </span>
+                            {% if cand_number == 0 %}
+                            <span>NA</span>
+                            {% else %}
+                            <span><a
+                                    href="{% url 'voting' election_idd=election.election_uid %}"><button
+                                        type="button" class="btn btn-primary btn-sm">Vote
+                                        here</button></a></span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END ELECTION DETAIL -->
+
+
+        <!-- CANDIDATE SECTION -->
+        <div class="col-xl-8 col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="text-center pb-4">
+                        <h4 class="elect-title">Candidates in Your constituency</h4>
+                    </div>
+                    {% if cand_number != 0 %}
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        {% for cand_info in candidates %}
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card candidate-card shadow">
+                                <img src="{{ cand_info.cand_img.url }}" alt="" class="candidate-img">
+                                <div class="card-body text-center">
+                                    <p class="card-text">
+                                    <h2>{{ cand_info.cand_name }}</h2>
+                                    <p title="{{ cand_info.cand_party }} Party">{{ cand_info.cand_party }}</p>
+                                    <p>{{ cand_info.cand_const }}</p>
+                                    <!-- Button trigger modal -->
+                                    <a target="_blank"
+                                        href="{% url 'candidate' candidate_idd=cand_info.candidate_uid %}"><button
+                                            type="button" class="btn btn-sm btn-outline-dark">More</button></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- END CANDIDATE SECTION -->
+    </div>
+</section>
+
+{% endblock %}

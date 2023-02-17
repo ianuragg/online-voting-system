@@ -1,0 +1,272 @@
+:root{
+    --main-color: #1D71A0;
+    --main-color-hover: #166591;
+    --body-color: #fff;
+    --text-color: #000;
+    --space-top: 30px;
+  }
+  
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+    
+  body{
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--body-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  a{
+    text-decoration: none;
+  }
+  a:hover{
+    color: var(--main-color-hover);
+    -webkit-transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -ms-transition: all 0.3s ease-out 0s;
+    -o-transition: all 0.3s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+  }
+  
+  .title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    font-size: 2.5rem;
+  }
+  
+  /* Navbar */
+  .navbar {
+    padding: 1rem 0 1rem;
+    background: var(--body-color);
+  }
+    
+  .navbar-brand {
+    font-size: 2.1rem;
+    font-weight: bold;
+  }
+    
+  .nav-item {
+    padding: 0 18px;
+  }
+  
+  .dropdown-item{
+    font-size: 1rem;
+    font-weight: 500;
+    -webkit-transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -ms-transition: all 0.3s ease-out 0s;
+    -o-transition: all 0.3s ease-out 0s;
+    transition: all 0.3s ease-out 0s;
+    text-transform: capitalize; 
+  }
+    
+  .nav-link {
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    -webkit-transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -ms-transition: all 0.3s ease-out 0s;
+    -o-transition: all 0.3s ease-out 0s;
+    transition: all 0.3s ease-out 0s;
+    text-transform: capitalize;
+  }
+  .nav-link:hover,
+  .dropdown-menu .dropdown-item:hover {
+      color: var(--main-color);
+      -webkit-transition: all 0.3s ease-out 0s;
+      -moz-transition: all 0.3s ease-out 0s;
+      -ms-transition: all 0.3s ease-out 0s;
+      -o-transition: all 0.3s ease-out 0s;
+      transition: all 0.2s ease-out 0s;
+  }
+  
+  /* Headings */
+  .section-header{
+    margin-bottom: 30px;
+    padding-left: 20px;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-left: 4px solid var(--main-color);
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Buttons */
+  .btn{
+    border-radius: 30px;
+    padding: 5px 25px;
+  }
+  .btn-primary{
+    background: var(--main-color);
+    border-color: var(--main-color);
+    color: #fff;
+  }
+  .btn-primary:hover{
+    background: var(--main-color-hover);
+    border-color: var(--main-color-hover);
+    color: #fff;
+    -webkit-transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -ms-transition: all 0.3s ease-out 0s;
+    -o-transition: all 0.3s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+  }
+  .btn-outline-primary{
+    border-color: var(--main-color);
+    color: #000;
+  }
+  .btn-outline-primary:hover{
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+    color: #fff;
+    -webkit-transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -ms-transition: all 0.3s ease-out 0s;
+    -o-transition: all 0.3s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+  }
+  
+  /* Table design */
+  .table{
+    border-radius: 10px;
+  }
+  td{
+    font-weight: 500;
+  }
+  
+  /* Forms and Fields */
+  .float-form{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #000;
+    border-radius: 0;
+  }
+  .form-control{
+    font-weight: 500;
+  }
+  .form-control:focus, .form-control:active{
+    box-shadow: none;
+    outline: none;
+    box-shadow: none;
+  }
+  
+  select.slt {
+    font-weight: 500;
+    outline: none;
+  }
+  select.slt:focus {
+    box-shadow: none;
+    outline: none;
+  }
+  
+  /* Card */
+  .card{
+    background: none;
+    border: none;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -o-border-radius: 20px;
+    -ms-border-radius: 20px;
+  }
+  
+  
+  /* Home Page */
+  .big-heading {
+    color: #282828;
+    font-size: 3.2rem;
+    line-height: 1.5;
+    font-weight: 800;
+  }
+  
+  .ovs-title {
+    animation-delay: 0.2s;
+    text-decoration: none;
+    color: var(--main-color);
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  /* Get Started Buttons */
+  .getstart-button {
+    background: var(--main-color);
+    border: none;
+    font-size: 1rem;
+    margin-top: 30px;
+    padding: 10px 20px 10px 20px;
+    font-weight: 500;
+  }
+  
+  .getstart-button:hover {
+    background: var(--main-color-hover);
+    color: #f4f4f4;
+  }
+  
+  
+  /*Account page*/
+  .profile img {
+    border-radius: 50%;
+    width: 140px;
+    border: 3px solid #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+  }
+  
+  /* Current Election */
+  .elect-title{
+    letter-spacing: 2px;
+    color: var(--main-color-hover);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  
+  /*  Election Detail  */
+  .election-detail .card{
+    border-radius: 60px;
+    padding: 5px 10px;
+  }
+  .election-detail span{
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  /* Candidate Card */
+  .candidate-card{
+    border-radius: 10px;
+    padding: 8px 12px;
+    align-items: center;
+  }
+  .candidate-img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    border: 3px solid #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+  }
+  .candidate-card h2{
+    font-size: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .candidate-card p{
+    font-size: 14px;
+  }
+  
+  .cand-rslt{
+    text-transform: uppercase;
+  }
+  .cand-rslt a{
+    color: var(--main-color-hover);
+    font-weight: 700;
+  }
+  
+  
+  /* HERO SECTION */
+  

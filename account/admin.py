@@ -1,7 +1,7 @@
 from django.contrib import admin
 from . models import User
 from account.models import User
-from core.models import Election, Candidate
+from core.models import Election, Candidate, Result
 
 #Django admin header customization
 admin.site.site_header = "Voting App Admin Login"
@@ -28,3 +28,10 @@ class CandidateAdmin(admin.ModelAdmin):
     list_display = ('cand_election', 'cand_name', 'cand_state', 'cand_party', 'total_votes', 'is_active')
     ordering = ('cand_state',)
     search_fields = ('cand_state',)
+
+#Result Model
+@admin.register(Result)
+class ResultAdmin(admin.ModelAdmin):
+    list_display = ('voter', 'candidate', 'election', 'is_voted')
+    ordering = ('voter',)
+    search_fields = ('voter',)

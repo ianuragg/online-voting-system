@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from core.models import Election, Candidate, Result
@@ -7,6 +7,7 @@ import datetime as dt
 from django.db.models import Sum, Max
 
 
+#HomevIew
 def index(request):
     return render(request, "core/home.html")
 
@@ -23,15 +24,23 @@ def election_detail(request, election_idd):
     # Check if election exist
     election = get_object_or_404(Election, election_uid=election_idd, election_state = request.user.state)
 
+    # Setting election active status
     election_days_left = election.end_date - dt.date.today()
+    if election_days_left.days < 0:
+        election.is_active = False
+        election.save()
 
     #Filtering candidates by election
     candidates = Candidate.objects.filter(cand_election=election, cand_const=request.user.constituency)
 
+    # check if user voted
+    is_voted = Result.objects.filter(voter=request.user, election=election)
+
     context = {
         "election":election,
         "candidates":candidates,
-        "election_days_left":election_days_left.days
+        "election_days_left":election_days_left.days,
+        "is_voted":is_voted
     }
 
     return render(request, "core/election_detail.html", context=context)
@@ -50,6 +59,12 @@ def voting_process(request, election_idd):
 
     # Check if election exist
     election = get_object_or_404(Election, election_uid=election_idd, is_active=True)
+
+    # Setting election active status
+    election_days_left = election.end_date - dt.date.today()
+    if election_days_left.days < 0:
+        election.is_active = False
+        election.save()
 
     #Getting form fields
     if request.method == 'POST':
@@ -99,19 +114,22 @@ def election_result(request, election_idd):
     #Calculating no. of candidates and total votes of all candidates
     candidates = Candidate.objects.filter(cand_election=election)
 
-    leading_candidate = candidates.aggregate(Max('total_votes'))['total_votes__max']
+    max_vote = Candidate.objects.filter(cand_election=election).aggregate(maxVote=Max('total_votes'))['maxVote']
+
+    leading_candidate = Candidate.objects.filter(cand_election=election, total_votes=max_vote)
 
     context = {
         "election":election,
         "candidates":candidates,
         "election_days_left":election_days_left.days,
-        "total_votes":candidates.aggregate(Sum('total_votes'))['total_votes__sum']
+        "total_votes":candidates.aggregate(Sum('total_votes'))['total_votes__sum'],
+        "leading_candidate":leading_candidate,
     }
 
     return render(request, "core/election_result.html", context=context)
 
 #Result View
 def result(request):
-    elect_data = Election.objects.filter(is_active=True)
+    elect_data = Election.objects.all()
     return render(request, "core/result.html", {"elect_data":elect_data})
 

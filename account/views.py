@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import Http404
-from datetime import datetime, date
+from datetime import date
 from account.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -102,26 +101,24 @@ def get_state_const_data(request):
 @login_required(login_url='login')
 def election_register(request):
     # Check if admin
-    if request.user.is_admin:
-        if request.method == 'POST':
-            #Getting form fields
-            election_state = request.POST['state']
-            election_name = request.POST['election-name']
-            start_date = request.POST['start-date']
-            end_date = request.POST['end-date']
+    check_admin = get_object_or_404(User, id=request.user.id, is_admin=True)
+    if request.method == 'POST':
+        #Getting form fields
+        election_state = request.POST['state']
+        election_name = request.POST['election-name']
+        start_date = request.POST['start-date']
+        end_date = request.POST['end-date']
 
-            #Check if election exist
-            election = Election.objects.filter(election_state=election_state, start_date=start_date, end_date=end_date).exists()
+        #Check if election exist
+        election = Election.objects.filter(election_state=election_state, start_date=start_date, end_date=end_date).exists()
 
-            if election:
-                messages.error(request, "Election already exists.")
-            else:
-                #Election Registration
-                new_election = Election(election_state=election_state,election_name=election_name, start_date=start_date, end_date=end_date)
-                new_election.save()
-                messages.success(request, "Election Created.")
-    else:
-        raise Http404
+        if election:
+            messages.error(request, "Election already exists.")
+        else:
+            #Election Registration
+            new_election = Election(election_state=election_state,election_name=election_name, start_date=start_date, end_date=end_date)
+            new_election.save()
+            messages.success(request, "Election Created.")
 
     return render(request, "account/election_registration.html")
 

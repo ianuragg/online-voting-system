@@ -13,40 +13,50 @@
                     </div>
                     <div class="pb-4">
                         <div class="d-flex justify-content-between mb-4">
-                            <span><b>Election Name</b></span>
-                            <span><b>{{ election.election_name }}</b></span>
+                            <span>Election Name</span>
+                            <span>{{ election.election_name }}</span>
                         </div>
                         <div class="d-flex justify-content-between mb-4">
-                            <span><b>State</b></span>
-                            <span><b>{{ election.election_state }}</b></span>
+                            <span>State</span>
+                            <span>{{ election.election_state }}</span>
                         </div>
                         <div class="d-flex justify-content-between mb-4">
-                            <span><b>Start Date</b></span>
-                            <span><b>{{ election.start_date }}</b></span>
+                            <span>Start Date</span>
+                            <span>{{ election.start_date }}</span>
                         </div>
                         <div class="d-flex justify-content-between mb-4">
-                            <span><b>End Date</b></span>
-                            <span><b>{{ election.end_date }}</b></span>
+                            <span>End Date</span>
+                            <span>{{ election.end_date }}</span>
                         </div>
                         <div class="d-flex justify-content-between mb-4">
-                            <span><b>Election Period</b></span>
-                            <span><b>{{ election_days_left }} Days Left</b></span>
+                            <span>Election Period</span>
+                            <span>{% if election.is_active %}{{ election_days_left }} Days Left{% else %}Over{% endif %}</span>
                         </div>
                         <div class="d-flex justify-content-between mb-4">
-                            <span><b>No. of Candidates</b></span>
-                            <span><b>{{ candidates|length }}</b></span>
+                            <span>No. of Candidates</span>
+                            <span>{{ candidates|length }}</span>
                         </div>
                         <div class="d-flex justify-content-between mb-4">
+                            {% if election.is_active %}
+                            {% if not is_voted %}
                             <span>
-                                <b>Caste Vote</b>
+                                Caste Vote
                             </span>
-                            {% if cand_number == 0 %}
-                            <span>NA</span>
+                            <span><a href="{% url 'voting' election_idd=election.election_uid %}"><button
+                                type="button" class="btn btn-primary btn-sm">Vote
+                                here</button>
+                            </a>
+                            </span>
                             {% else %}
+                            <span>Vote Status</span>
+                            <span class="text-success">Done</span>
+                            {% endif %}
+
+                            {% else %}
+                            <span>Result</span>
                             <span><a
-                                    href="{% url 'voting' election_idd=election.election_uid %}"><button
-                                        type="button" class="btn btn-primary btn-sm">Vote
-                                        here</button></a></span>
+                                href="{% url 'election-result' election_idd=election.election_uid %}"><button
+                                    type="button" class="btn btn-primary btn-sm">Result</button></a></span>
                             {% endif %}
                         </div>
                     </div>

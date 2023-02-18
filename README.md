@@ -3,7 +3,7 @@ Online Voting System Website Built on Django Framework
 
 <h2> How to use: </h2>
 <ul dir="auto">
-<li>Create superuser (python manage.py create superuser)</li>
+<li>Create superuser (python manage.py createsuperuser)</li>
 <li>Create Election - (Admin)</li>
 <li>Register Candidate - (Admin)</li>
 <li>User has permission to register, login, and caste vote during election period - (User)</li>
@@ -12,8 +12,8 @@ Online Voting System Website Built on Django Framework
 <h2> Features: </h2>
 <ul dir="auto">
 <li>User Registration / Login</li>
-<li>Candidate Registration</li>
-<li>Election Registration</li>
+<li>Custom Candidate Registration - (Admin)</li>
+<li>Custom Election Registration - (Admin)</li>
 <li>Active / Expired Elections</li>
 <li>Election Details</li>
 <li>Candidate Page</li>
